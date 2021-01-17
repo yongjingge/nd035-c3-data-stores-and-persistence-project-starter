@@ -6,6 +6,9 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
+@NamedQuery(
+        name = "Pet.findAllByOwnerNamedQuery",
+        query = "select p from Pet p where p.customer.id = :id")
 public class Pet {
 
     @Id
