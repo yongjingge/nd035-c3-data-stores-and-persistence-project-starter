@@ -17,9 +17,19 @@ public class Schedule {
     private Long id;
 
     @ManyToMany
+    @JoinTable(
+            name = "schedule_employee",
+            joinColumns = { @JoinColumn(name = "schedule_id")},
+            inverseJoinColumns = { @JoinColumn(name = "employee_id")}
+    )
     private List<Employee> employeesOnSchedule;
 
     @ManyToMany
+    @JoinTable(
+            name = "schedule_pet",
+            joinColumns = { @JoinColumn(name = "schedule_id")},
+            inverseJoinColumns = { @JoinColumn(name = "pet_id")}
+    )
     private List<Pet> petsOnSchedule;
 
     private LocalDate date;
