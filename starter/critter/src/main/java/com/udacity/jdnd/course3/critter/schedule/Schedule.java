@@ -22,7 +22,7 @@ public class Schedule {
             joinColumns = { @JoinColumn(name = "schedule_id")},
             inverseJoinColumns = { @JoinColumn(name = "employee_id")}
     )
-    private List<Employee> employeesOnSchedule;
+    private List<Employee> employees;
 
     @ManyToMany
     @JoinTable(
@@ -30,7 +30,7 @@ public class Schedule {
             joinColumns = { @JoinColumn(name = "schedule_id")},
             inverseJoinColumns = { @JoinColumn(name = "pet_id")}
     )
-    private List<Pet> petsOnSchedule;
+    private List<Pet> pets;
 
     private LocalDate date;
 
@@ -48,20 +48,20 @@ public class Schedule {
         this.id = id;
     }
 
-    public List<Employee> getEmployeesOnSchedule() {
-        return employeesOnSchedule;
+    public List<Employee> getEmployees() {
+        return employees;
     }
 
-    public void setEmployeesOnSchedule(List<Employee> employeesOnSchedule) {
-        this.employeesOnSchedule = employeesOnSchedule;
+    public void setEmployees(List<Employee> employees) {
+        this.employees = employees;
     }
 
-    public List<Pet> getPetsOnSchedule() {
-        return petsOnSchedule;
+    public List<Pet> getPets() {
+        return pets;
     }
 
-    public void setPetsOnSchedule(List<Pet> petsOnSchedule) {
-        this.petsOnSchedule = petsOnSchedule;
+    public void setPets(List<Pet> pets) {
+        this.pets = pets;
     }
 
     public LocalDate getDate() {

@@ -17,7 +17,7 @@ public class CustomerService {
     }
 
     public Customer getCustomerByPetId (Long petId) {
-        return customerRepository.findCustomerByPetId(petId);
+        return customerRepository.findCustomerByPetsId(petId);
     }
 
     public Customer saveCustomer (Customer customer) {

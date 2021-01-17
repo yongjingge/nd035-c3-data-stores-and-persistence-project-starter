@@ -26,15 +26,15 @@ public class ScheduleService {
     }
 
     public List<Schedule> getScheduleForPet (Long petId) {
-        return scheduleRepository.findAllByPetId(petId);
+        return scheduleRepository.findAllByPetsId(petId);
     }
 
     public List<Schedule> getScheduleForEmployee (Long employeeId) {
-        return scheduleRepository.findAllByEmployeeId(employeeId);
+        return scheduleRepository.findAllByEmployeesId(employeeId);
     }
 
     public List<Schedule> getScheduleForCustomer (Long customerId) {
-        return scheduleRepository.findAllByCustomerId(customerId);
+        return scheduleRepository.findAllByPetsCustomerId(customerId);
     }
 
     public List<Schedule> iterableToList (Iterable<Schedule> schedules) {

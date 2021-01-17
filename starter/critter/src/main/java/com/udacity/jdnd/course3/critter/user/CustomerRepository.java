@@ -10,5 +10,5 @@ import javax.transaction.Transactional;
 @Transactional
 public interface CustomerRepository extends CrudRepository<Customer, Long> {
 
-    Customer findCustomerByPetId (Long petId);
+    Customer findCustomerByPetsId (Long petId);
 }

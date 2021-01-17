@@ -29,6 +29,6 @@ public class EmployeeService {
     }
 
     public List<Employee> findEmployeesForService (Set<EmployeeSkill> skills, DayOfWeek day) {
-        return employeeRepository.findAllBySkillsAndDaysAvailable(skills, day);
+        return employeeRepository.findAllBySkillsInAndDaysAvailable(skills, day);
     }
 }

@@ -10,9 +10,9 @@ import java.util.List;
 @Transactional
 public interface ScheduleRepository extends CrudRepository<Schedule, Long> {
 
-    List<Schedule> findAllByPetId (Long petId);
+    List<Schedule> findAllByPetsId (Long petId);
 
-    List<Schedule> findAllByEmployeeId (Long employeeId);
+    List<Schedule> findAllByEmployeesId (Long employeeId);
 
-    List<Schedule> findAllByCustomerId (Long customerId);
+    List<Schedule> findAllByPetsCustomerId (Long customerId);
 }
