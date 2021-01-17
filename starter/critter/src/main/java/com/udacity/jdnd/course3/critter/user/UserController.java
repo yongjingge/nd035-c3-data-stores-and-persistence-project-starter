@@ -16,6 +16,7 @@ import java.util.Set;
 @RequestMapping("/user")
 public class UserController {
 
+    // ----------- CUSTOMER -----------
     @PostMapping("/customer")
     public CustomerDTO saveCustomer(@RequestBody CustomerDTO customerDTO){
         throw new UnsupportedOperationException();
@@ -31,6 +32,7 @@ public class UserController {
         throw new UnsupportedOperationException();
     }
 
+    // ----------- EMPLOYEE -----------
     @PostMapping("/employee")
     public EmployeeDTO saveEmployee(@RequestBody EmployeeDTO employeeDTO) {
         throw new UnsupportedOperationException();
@@ -48,6 +50,7 @@ public class UserController {
 
     @GetMapping("/employee/availability")
     public List<EmployeeDTO> findEmployeesForService(@RequestBody EmployeeRequestDTO employeeDTO) {
+        // need to separate employeeRequestDTO into fields
         throw new UnsupportedOperationException();
     }
 
