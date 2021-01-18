@@ -1,5 +1,9 @@
 package com.udacity.jdnd.course3.critter.schedule;
 
+import com.udacity.jdnd.course3.critter.pet.Pet;
+import com.udacity.jdnd.course3.critter.pet.PetService;
+import com.udacity.jdnd.course3.critter.user.Employee;
+import com.udacity.jdnd.course3.critter.user.EmployeeService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +20,12 @@ public class ScheduleController {
 
     @Autowired
     ScheduleService scheduleService;
+
+    @Autowired
+    EmployeeService employeeService;
+
+    @Autowired
+    PetService petService;
 
     @PostMapping
     public ScheduleDTO createSchedule(@RequestBody ScheduleDTO scheduleDTO) {
@@ -43,19 +53,49 @@ public class ScheduleController {
         return convertEntitiesToDTOs(scheduleService.getScheduleForCustomer(customerId));
     }
 
-    public static ScheduleDTO convertEntityToDTO (Schedule schedule) {
+    // note the difference between fields of ScheduleDTO and Schedule: List<Employee/Pet> and List<Long> of their IDs
+    public ScheduleDTO convertEntityToDTO (Schedule schedule) {
         ScheduleDTO scheduleDTO = new ScheduleDTO();
         BeanUtils.copyProperties(schedule, scheduleDTO);
+        if (schedule.getEmployees() != null) {
+            List<Long> employeesIds = new ArrayList<>();
+            for (Employee singleEmployee : schedule.getEmployees()) {
+                employeesIds.add(singleEmployee.getId());
+            }
+            scheduleDTO.setEmployeeIds(employeesIds);
+        }
+        if (schedule.getPets() != null) {
+            List<Long> petsIds = new ArrayList<>();
+            for (Pet singlePet : schedule.getPets()) {
+                petsIds.add(singlePet.getId());
+            }
+            scheduleDTO.setPetIds(petsIds);
+        }
         return scheduleDTO;
     }
 
-    public static Schedule convertDTOToEntity (ScheduleDTO scheduleDTO) {
+    // note the difference between fields of ScheduleDTO and Schedule: List<Employee/Pet> and List<Long> of their IDs
+    public Schedule convertDTOToEntity (ScheduleDTO scheduleDTO) {
         Schedule schedule = new Schedule();
         BeanUtils.copyProperties(scheduleDTO, schedule);
+        if (scheduleDTO.getEmployeeIds() != null) {
+            List<Employee> employees = new ArrayList<>();
+            for (Long singleEmployeeId : scheduleDTO.getEmployeeIds()) {
+                employees.add(employeeService.getEmployeeByEmployeeId(singleEmployeeId));
+            }
+            schedule.setEmployees(employees);
+        }
+        if (scheduleDTO.getPetIds() != null) {
+            List<Pet> pets = new ArrayList<>();
+            for (Long singlePetId : scheduleDTO.getPetIds()) {
+                pets.add(petService.getPetByPetId(singlePetId));
+            }
+            schedule.setPets(pets);
+        }
         return schedule;
     }
 
-    public static List<ScheduleDTO> convertEntitiesToDTOs (List<Schedule> schedules) {
+    public List<ScheduleDTO> convertEntitiesToDTOs (List<Schedule> schedules) {
         List<ScheduleDTO> res = new ArrayList<>();
         for (Schedule singleSchedule : schedules) {
             res.add(convertEntityToDTO(singleSchedule));

@@ -1,5 +1,6 @@
 package com.udacity.jdnd.course3.critter.pet;
 
+import com.udacity.jdnd.course3.critter.user.CustomerService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,9 @@ public class PetController {
 
     @Autowired
     PetService petService;
+
+    @Autowired
+    CustomerService customerService;
 
     @PostMapping
     public PetDTO savePet(@RequestBody PetDTO petDTO) {
@@ -38,19 +42,27 @@ public class PetController {
         return convertEntitiesToDTOs(petService.getPetsByOwnerId(ownerId));
     }
 
-    public static PetDTO convertEntityToPetDTO (Pet pet) {
+    // note the difference between fields of PetDTO and Pet: customerId and customer
+    public PetDTO convertEntityToPetDTO (Pet pet) {
         PetDTO petDTO = new PetDTO();
         BeanUtils.copyProperties(pet, petDTO);
+        if (pet.getCustomer() != null) {
+            petDTO.setCustomerId(pet.getCustomer().getId());
+        }
         return petDTO;
     }
 
-    public static Pet convertPetDTOToEntity (PetDTO petDTO) {
+    // note the difference between fields of PetDTO and Pet: customerId and customer
+    public Pet convertPetDTOToEntity (PetDTO petDTO) {
         Pet pet = new Pet();
         BeanUtils.copyProperties(petDTO, pet);
+        if (petDTO.getCustomerId() > 0) {
+            pet.setCustomer(customerService.getCustomerByCustomerId(petDTO.getCustomerId()));
+        }
         return pet;
     }
 
-    public static List<PetDTO> convertEntitiesToDTOs (List<Pet> pets) {
+    public List<PetDTO> convertEntitiesToDTOs (List<Pet> pets) {
         List<PetDTO> res = new ArrayList<>();
         for (Pet singlePet : pets) {
             res.add(convertEntityToPetDTO(singlePet));
