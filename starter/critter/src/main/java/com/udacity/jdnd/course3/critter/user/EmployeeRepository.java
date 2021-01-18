@@ -12,6 +12,6 @@ import java.util.Set;
 @Transactional
 public interface EmployeeRepository extends CrudRepository<Employee, Long> {
 
-    // Find out which employees with the right skills are available on a given date.
+    // Find out which employees with the right skills are available on a given date. BySkillsIn Set will need to be fixed in Service.
     List<Employee> findAllBySkillsInAndDaysAvailable (Set<EmployeeSkill> skills, DayOfWeek dayOfWeek);
 }

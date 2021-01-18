@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.DayOfWeek;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -29,6 +30,14 @@ public class EmployeeService {
     }
 
     public List<Employee> findEmployeesForService (Set<EmployeeSkill> skills, DayOfWeek day) {
-        return employeeRepository.findAllBySkillsInAndDaysAvailable(skills, day);
+        List<Employee> candidates = employeeRepository.findAllBySkillsInAndDaysAvailable(skills, day);
+        List<Employee> res = new ArrayList<>();
+        // deal with the 'findAllBySkillsIn' issue
+        for (Employee candidate : candidates) {
+            if (candidate.getSkills().containsAll(skills)) {
+                res.add(candidate);
+            }
+        }
+        return res;
     }
 }
