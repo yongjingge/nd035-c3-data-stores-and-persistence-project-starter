@@ -6,12 +6,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.time.DayOfWeek;
 import java.util.Set;
+import javax.persistence.*;
 
 @Entity
 public class Employee {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
